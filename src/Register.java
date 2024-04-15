@@ -1,9 +1,9 @@
-package servlet;
-
+import db.dao.UserActivationLinkDao;
 import db.dao.UserDao;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import service.EmailSendingService;
 import service.UserService;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ public class Register extends HttpServlet {
     private final UserService userService;
 
     public Register() {
-        userService = new UserService(new UserDao());
+        userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
     }
 
     @Override

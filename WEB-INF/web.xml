@@ -12,7 +12,11 @@
     <!-- SERVLET-DEFINITIONS-START -->
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>servlet.Register</servlet-class>
+        <servlet-class>Register</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActivateUserServlet</servlet-name>
+        <servlet-class>ActivateUser</servlet-class>
     </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
@@ -21,6 +25,10 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActivateUserServlet</servlet-name>
+        <url-pattern>/activate</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 

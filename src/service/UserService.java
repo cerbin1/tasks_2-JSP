@@ -1,5 +1,6 @@
 package service;
 
+import db.dao.UserActivationLinkDao;
 import db.dao.UserDao;
 
 import java.nio.charset.StandardCharsets;
@@ -7,11 +8,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
+import static conf.ApplicationProperties.APP_BASE_PATH;
+import static conf.ApplicationProperties.APP_BASE_URL;
+
 public class UserService {
     private final UserDao userDao;
+    private final UserActivationLinkDao userActivationLinkDao;
+    private final EmailSendingService emailSendingService;
 
-    public UserService(UserDao userDao) {
+    public UserService(UserDao userDao, UserActivationLinkDao userActivationLinkDao, EmailSendingService emailSendingService) {
         this.userDao = userDao;
+        this.userActivationLinkDao = userActivationLinkDao;
+        this.emailSendingService = emailSendingService;
     }
 
     public boolean validateNoUserWithGivenEmailAndUsername(String email, String username) {
@@ -22,10 +30,18 @@ public class UserService {
         String hashedPassword = hashPassword(plainPassword);
         userDao.createUser(email, username, hashedPassword, name, surname);
 
-//        UUID randomUuid = UUID.randomUUID();
-//        userActivationLinkDao.createLink(username, randomUuid);
-//        String mailContent = "Go to this link to activate your account: \n" + APP_BASE_URL + APP_BASE_PATH + "/activate?linkId=" + randomUuid;
-//        emailSendingService.sendEmail("Task Application - activation link", mailContent, email);
+        UUID randomUuid = UUID.randomUUID();
+        userActivationLinkDao.createLink(username, randomUuid);
+        String mailContent = "Go to this link to activate your account: \n" + APP_BASE_URL + APP_BASE_PATH + "/activate?linkId=" + randomUuid;
+        emailSendingService.sendEmail("Task Application - activation link", mailContent, email);
+    }
+
+    public boolean activateUserByLink(String id) {
+        String username = userActivationLinkDao.getUsernameForNonExpiredLink(id);
+        if (userDao.setUserActive(username)) {
+            return userActivationLinkDao.setLinkExpired(id);
+        }
+        return false;
     }
 
     // note - SHA-512 should be changed with PBKDF2, BCrypt, or SCrypt but for simplicity and no additional lib SHA was used

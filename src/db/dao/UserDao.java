@@ -4,12 +4,26 @@ import db.DbConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static java.sql.ResultSet.CONCUR_READ_ONLY;
+import static java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE;
 
 public class UserDao {
     private static final String SQL_GET_BY_EMAIL = "SELECT * FROM \"user\" WHERE email = ?";
     private static final String SQL_GET_BY_USERNAME = "SELECT * FROM \"user\" WHERE username = ?";
     private static final String SQL_CREATE_USER = "INSERT INTO \"user\" (email, username, password, name, surname) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_SELECT_USERS = "SELECT id FROM \"user\" WHERE username = ? AND password = ?";
+    private static final String SQL_SELECT_USER_LOGINS = "SELECT * FROM user_login WHERE username = ? AND session_id = ? AND active = TRUE";
+    private static final String SQL_CREATE_LOGIN = "INSERT INTO user_login (username, session_id) VALUES (?, ?)";
+    private static final String SQL_DEACTIVATE_LOGIN = "UPDATE user_login SET active = FALSE WHERE username = ?";
+    private static final String SQL_ACTIVATE_USER = "UPDATE \"user\" SET active = TRUE WHERE username = ?";
+    private static final String SQL_IS_USER_ACTIVE = "SELECT * FROM \"user\" WHERE username = ? AND active = TRUE";
+    private static final String SQL_GET_ALL_USERS = "SELECT id, name, surname, username FROM \"user\"";
+    private static final String SQL_GET_ALL_USERS_FOR_ADMIN_PANEL = "SELECT id, email, username, name, surname, active, (SELECT COUNT(*) FROM chat_message WHERE chat_message.sender_id = \"user\".id) AS messagesCount FROM \"user\"";
+    private static final String SQL_REMOVE_USER = "DELETE FROM \"user\" WHERE id = ?";
+    private static final String SQL_GET_NUMBER_OF_USERS = "SELECT COUNT(*) FROM \"user\"";
 
     public boolean existsByEmail(String email) {
         DbConnection dbConnection = new DbConnection();
@@ -53,6 +67,40 @@ public class UserDao {
                 throw new SQLException();
             }
             connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean userLoginExists(String username, String sessionId) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_LOGINS, TYPE_SCROLL_INSENSITIVE, CONCUR_READ_ONLY)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, sessionId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                return onlyOneRowIn(resultSet);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean onlyOneRowIn(ResultSet resultSet) throws SQLException {
+        return resultSet.next() && !resultSet.next();
+    }
+
+    public boolean setUserActive(String username) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_ACTIVATE_USER)) {
+                preparedStatement.setString(1, username);
+                return preparedStatement.executeUpdate() == 1;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
