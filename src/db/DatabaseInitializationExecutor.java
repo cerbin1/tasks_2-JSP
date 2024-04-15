@@ -11,7 +11,7 @@ public class DatabaseInitializationExecutor {
 
     public void run() {
         Connection connection = (new DbConnection()).createConnection();
-        String scriptsFilePath = System.getenv("SERVLET_FILES_PATH") + "db/sql/scripts.sql";
+        String scriptsFilePath = System.getenv("JSP_FILES_PATH") + "db/sql/scripts.sql";
         try (Statement statement = connection.createStatement()) {
             statement.execute(readScriptFile(scriptsFilePath));
             System.out.println("SQL script executed successfully.");
