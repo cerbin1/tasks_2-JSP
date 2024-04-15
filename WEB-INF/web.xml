@@ -4,8 +4,34 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-    <display-name>Tasks</display-name>/add tests to
+    <display-name>Tasks</display-name>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <!-- SERVLET-DEFINITIONS-START -->
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>servlet.Register</servlet-class>
+    </servlet>
+    <!-- SERVLET-DEFINITIONS-END -->
+
+
+    <!-- SERVLET-MAPPINGS-START -->
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <!-- SERVLET-MAPPINGS-END -->
+
+
+    <!-- SERVLET-LISTENERS-START -->
+    <listener>
+        <listener-class>
+            conf.MyServletContextListener
+        </listener-class>
+    </listener>
+    <!-- SERVLET-LISTENERS-END -->
+
+
 </web-app>

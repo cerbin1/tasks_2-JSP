@@ -31,6 +31,30 @@
             </div>
         </nav>
         <img src="logo.svg" class="App-logo" alt="logo" />
+        <form action="/tasks_2-JSP/register" method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
+    
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" id="username" name="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" id="name" name="name" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="surname">Surname</label>
+                <input class="form-control" id="surname" name="surname" placeholder="Enter surname">
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
     </div>
 </body>
 </html>
