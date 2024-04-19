@@ -50,7 +50,7 @@
                                     ${task.completeDate}
                                 </c:if>
                             </td>
-                            <td>Edit</td>
+                            <td><a href="editTask?taskId=${task.id}">Edit</a></td>
                             <td>Remove</td>
                         </tr>
                     </c:forEach>
