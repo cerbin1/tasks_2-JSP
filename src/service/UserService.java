@@ -61,4 +61,21 @@ public class UserService {
         }
         return generatedPassword;
     }
+
+    public boolean userIsLoggedIn(String username, String sessionId) {
+        return userDao.userLoginExists(username, sessionId);
+    }
+
+    public boolean userIsActive(String username) {
+        return userDao.getActiveUserWith(username);
+    }
+
+    public String getUserIdByUserCredentials(String username, String plainPassword) {
+        return userDao.getUserIdByUsernameAndPassword(username, hashPassword(plainPassword));
+    }
+
+    public void createLogin(String username, String sessionId) {
+        userDao.createLogin(username, sessionId);
+    }
+
 }

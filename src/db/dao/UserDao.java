@@ -105,4 +105,49 @@ public class UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean getActiveUserWith(String username) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_IS_USER_ACTIVE)) {
+                preparedStatement.setString(1, username);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                return onlyOneRowIn(resultSet);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getUserIdByUsernameAndPassword(String username, String hashedPassword) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USERS)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, hashedPassword);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                return resultSet.getString("id");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createLogin(String username, String sessionId) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_LOGIN)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, sessionId);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
