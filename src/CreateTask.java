@@ -1,15 +1,9 @@
-import db.dao.PriorityDao;
-import db.dao.TaskDao;
-import db.dao.UserActivationLinkDao;
-import db.dao.UserDao;
+import db.dao.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.EmailSendingService;
-import service.PriorityService;
-import service.TaskService;
-import service.UserService;
+import service.*;
 import service.dto.PriorityDto;
 import service.dto.UserDto;
 
@@ -22,11 +16,13 @@ public class CreateTask extends HttpServlet {
     private final UserService userService;
     private final PriorityService priorityService;
     private final TaskService taskService;
+    private final NotificationService notificationService;
 
     public CreateTask() {
         this.taskService = new TaskService(new TaskDao());
         this.userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
         this.priorityService = new PriorityService(new PriorityDao());
+        this.notificationService = new NotificationService(new NotificationDao());
     }
 
     @Override
@@ -52,6 +48,7 @@ public class CreateTask extends HttpServlet {
             request.setAttribute("error", "Task creation failed");
             request.getServletContext().getRequestDispatcher("/navbar.jsp").forward(request, response);
         } else {
+            notificationService.createNotification("New Task", taskId, creatorId);
             response.sendRedirect(APP_BASE_PATH + "/tasks");
         }
     }

@@ -50,21 +50,21 @@ ALTER TABLE task ADD CONSTRAINT fkekr1dgiqktpyoip3qmp6lxsit FOREIGN KEY (assigne
 ALTER TABLE task ADD CONSTRAINT fknq0d4mra8tpuwwak86ctvhfsb FOREIGN KEY (priority_id) REFERENCES priority(id);
 ALTER TABLE task ADD CONSTRAINT fkt1ph5sat39g9lpa4g5kl46tbv FOREIGN KEY (creator_id) REFERENCES "user"(id);
 
---CREATE TABLE IF NOT EXISTS notification (
---	id bigserial NOT NULL,
---	create_date timestamp(6) NOT NULL,
---	"name" varchar(255) NOT NULL,
---	"read" bool NOT NULL DEFAULT false,
---	read_date timestamp(6) NULL,
---	task_id int8 NOT NULL,
---	user_id int8 NOT NULL,
---	CONSTRAINT notification_pkey PRIMARY KEY (id)
---);
---ALTER TABLE notification DROP CONSTRAINT IF EXISTS fk2ktjq1slw0ldkuy5rx8fbte2p;
---ALTER TABLE notification DROP CONSTRAINT IF EXISTS fk9y21adhxn0ayjhfocscqox7bh;
---ALTER TABLE notification ADD CONSTRAINT fk2ktjq1slw0ldkuy5rx8fbte2p FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
---ALTER TABLE notification ADD CONSTRAINT fk9y21adhxn0ayjhfocscqox7bh FOREIGN KEY (user_id) REFERENCES "user"(id);
---
+CREATE TABLE IF NOT EXISTS notification (
+	id bigserial NOT NULL,
+	create_date timestamp(6) NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"read" bool NOT NULL DEFAULT false,
+	read_date timestamp(6) NULL,
+	task_id int8 NOT NULL,
+	user_id int8 NOT NULL,
+	CONSTRAINT notification_pkey PRIMARY KEY (id)
+);
+ALTER TABLE notification DROP CONSTRAINT IF EXISTS fk2ktjq1slw0ldkuy5rx8fbte2p;
+ALTER TABLE notification DROP CONSTRAINT IF EXISTS fk9y21adhxn0ayjhfocscqox7bh;
+ALTER TABLE notification ADD CONSTRAINT fk2ktjq1slw0ldkuy5rx8fbte2p FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
+ALTER TABLE notification ADD CONSTRAINT fk9y21adhxn0ayjhfocscqox7bh FOREIGN KEY (user_id) REFERENCES "user"(id);
+
 --CREATE TABLE IF NOT EXISTS task_reminder (
 --	id bigserial NOT NULL,
 --	sent bool NOT NULL DEFAULT false,
