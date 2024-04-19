@@ -62,6 +62,12 @@
             </tbody>
         </table>
         <h1>Filters</h1>
+        <div class="form-group row">
+            <form action="/tasks_2-JSP/searchByName" method="get">
+                <input type="text" class="form-control" name="name" />
+                <button type="submit" class="btn btn-primary">Search by name</button>
+            </form>
+        </div>
     </body>
 
 </html>

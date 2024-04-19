@@ -57,6 +57,10 @@
         <servlet-name>RemoveTaskServlet</servlet-name>
         <servlet-class>RemoveTask</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchByNameServlet</servlet-name>
+        <servlet-class>SearchByName</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -100,6 +104,10 @@
     <servlet-mapping>
         <servlet-name>RemoveTaskServlet</servlet-name>
         <url-pattern>/removeTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchByNameServlet</servlet-name>
+        <url-pattern>/searchByName</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 
