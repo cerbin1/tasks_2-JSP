@@ -21,7 +21,7 @@ public class AuthenticationFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String path = request.getRequestURI().substring(request.getContextPath().length());
-        if (isLoginOrRegister(path)) {
+        if (noAuthenticationRequired(path)) {
             chain.doFilter(request, response);
             return;
         }
@@ -32,7 +32,7 @@ public class AuthenticationFilter extends HttpFilter {
         }
     }
 
-    private static boolean isLoginOrRegister(String path) {
-        return path.equals("/index.jsp") || path.equals("/register.jsp");
+    private static boolean noAuthenticationRequired(String path) {
+        return path.equals("/index.jsp") || path.equals("/login") || path.equals("/register.jsp") || path.equals("/authError.html");
     }
 }
