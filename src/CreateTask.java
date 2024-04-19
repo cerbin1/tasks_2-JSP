@@ -16,6 +16,8 @@ import service.dto.UserDto;
 import java.io.IOException;
 import java.util.List;
 
+import static conf.ApplicationProperties.APP_BASE_PATH;
+
 public class CreateTask extends HttpServlet {
     private final UserService userService;
     private final PriorityService priorityService;
@@ -50,7 +52,7 @@ public class CreateTask extends HttpServlet {
             request.setAttribute("error", "Task creation failed");
             request.getServletContext().getRequestDispatcher("/navbar.jsp").forward(request, response);
         } else {
-            response.sendRedirect("tasks.jsp");
+            response.sendRedirect(APP_BASE_PATH + "/tasks");
         }
     }
 }

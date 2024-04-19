@@ -37,6 +37,10 @@
         <servlet-name>CreateTaskServlet</servlet-name>
         <servlet-class>CreateTask</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TasksServlet</servlet-name>
+        <servlet-class>Tasks</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -60,6 +64,10 @@
     <servlet-mapping>
         <servlet-name>CreateTaskServlet</servlet-name>
         <url-pattern>/createTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TasksServlet</servlet-name>
+        <url-pattern>/tasks</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 
