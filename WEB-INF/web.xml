@@ -45,6 +45,10 @@
         <servlet-name>EditTaskServlet</servlet-name>
         <servlet-class>EditTask</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MyTasksServlet</servlet-name>
+        <servlet-class>MyTasks</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -76,6 +80,10 @@
     <servlet-mapping>
         <servlet-name>EditTaskServlet</servlet-name>
         <url-pattern>/editTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyTasksServlet</servlet-name>
+        <url-pattern>/myTasks</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 

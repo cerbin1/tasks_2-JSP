@@ -157,4 +157,31 @@ public class TaskDao {
             throw new RuntimeException(e);
         }
     }
+
+    public List<TaskDto> findAllByAssigneeId(Long assigneeId) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_USERNAME_TASKS)) {
+                preparedStatement.setLong(1, assigneeId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                List<TaskDto> tasks = new ArrayList<>();
+                while (resultSet.next()) {
+                    tasks.add(new TaskDto(resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getObject("deadline", LocalDateTime.class),
+                            resultSet.getString("assigneeName"),
+                            resultSet.getString("priorityValue"),
+                            resultSet.getBoolean("completed"),
+                            resultSet.getObject("complete_date", LocalDateTime.class),
+                            resultSet.getString("category")
+                    ));
+                }
+                return tasks;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
