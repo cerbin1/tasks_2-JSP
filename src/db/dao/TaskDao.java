@@ -208,4 +208,20 @@ public class TaskDao {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean removeById(Long taskId) {
+        DbConnection dbConnection = new DbConnection();
+        Connection connection = dbConnection.createConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_TASK_BY_ID)) {
+            preparedStatement.setLong(1, taskId);
+            boolean taskDeleted = preparedStatement.executeUpdate() == 1;
+            if (!taskDeleted) {
+                throw new SQLException();
+            }
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

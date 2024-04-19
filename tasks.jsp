@@ -51,7 +51,11 @@
                                 </c:if>
                             </td>
                             <td><a href="editTask?taskId=${task.id}">Edit</a></td>
-                            <td>Remove</td>
+                            <td>
+                                <form action="/tasks_2-JSP/removeTask?taskId=${task.id}" method="post">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </c:if>
