@@ -150,4 +150,18 @@ public class UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void deactivateUserLogin(String username) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DEACTIVATE_LOGIN)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

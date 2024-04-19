@@ -78,4 +78,7 @@ public class UserService {
         userDao.createLogin(username, sessionId);
     }
 
+    public void logoutUser(String username) {
+        userDao.deactivateUserLogin(username);
+    }
 }
