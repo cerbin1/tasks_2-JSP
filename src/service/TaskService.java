@@ -39,4 +39,8 @@ public class TaskService {
     public List<TaskDto> getUserTasks(String userId) {
         return taskDao.findAllByAssigneeId(Long.parseLong(userId));
     }
+
+    public TaskDto getTask(String taskId) {
+        return taskDao.findById(Long.parseLong(taskId));
+    }
 }
