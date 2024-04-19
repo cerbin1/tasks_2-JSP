@@ -30,7 +30,8 @@
                     <div class="col-sm-10">
                         <select class="form-select" id="user" name="user">
                             <c:forEach var="user" items="${users}">
-                                <option value="${user.id}" selected="{user.id eq task.assigneeId}">${user.name}
+                                <option value="${user.id}" <c:if test="${user.id eq task.assigneeId}">selected</c:if>>
+                                    ${user.name}
                                     ${user.surname}</option>
                             </c:forEach>
                         </select>
@@ -42,7 +43,8 @@
                     <div class="col-sm-10">
                         <select class="form-select" id="priority" name="priority">
                             <c:forEach var="priority" items="${priorities}">
-                                <option value="${priority.id}" selected="{priority.id eq task.priorityId}">
+                                <option value="${priority.id}" <c:if test="${priority.id eq task.priorityId}">selected
+                                    </c:if>>
                                     ${priority.value}</option>
                             </c:forEach>
                         </select>
