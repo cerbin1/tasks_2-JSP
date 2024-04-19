@@ -33,6 +33,10 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateTaskServlet</servlet-name>
+        <servlet-class>CreateTask</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -52,6 +56,10 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTaskServlet</servlet-name>
+        <url-pattern>/createTask</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 

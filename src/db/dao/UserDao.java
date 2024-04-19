@@ -1,11 +1,14 @@
 package db.dao;
 
 import db.DbConnection;
+import service.dto.UserDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE;
@@ -157,6 +160,27 @@ public class UserDao {
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DEACTIVATE_LOGIN)) {
                 preparedStatement.setString(1, username);
                 preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<UserDto> findAll() {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_ALL_USERS)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                List<UserDto> allUsers = new ArrayList<>();
+                while (resultSet.next()) {
+                    allUsers.add(new UserDto(resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("surname"),
+                            resultSet.getString("username")));
+                }
+                return allUsers;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

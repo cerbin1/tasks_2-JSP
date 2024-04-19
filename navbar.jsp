@@ -45,6 +45,12 @@
             </div>
         </nav>
 
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger" role="alert">
+                ${error}
+            </div>
+        </c:if>
+
     </body>
 
 </html>

@@ -2,10 +2,12 @@ package service;
 
 import db.dao.UserActivationLinkDao;
 import db.dao.UserDao;
+import service.dto.UserDto;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.UUID;
 
 import static conf.ApplicationProperties.APP_BASE_PATH;
@@ -80,5 +82,9 @@ public class UserService {
 
     public void logoutUser(String username) {
         userDao.deactivateUserLogin(username);
+    }
+
+    public List<UserDto> getUsersData() {
+        return userDao.findAll();
     }
 }
