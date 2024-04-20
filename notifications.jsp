@@ -56,7 +56,12 @@
                             <td>${task.userNameAssigned}</td>
                             <td><a href="details?taskId=${notification.taskId}">Go to task</a></td>
                             <td>Mark as read</td>
-                            <td>Remove</td>
+                            <td>
+                                <form action="/tasks_2-JSP/removeNotification?notificationId=${notification.id}"
+                                    method="post">
+                                    <button class="btn btn-danger" type="submit">Remove</button>
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </c:if>
