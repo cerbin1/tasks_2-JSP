@@ -61,6 +61,10 @@
         <servlet-name>SearchByNameServlet</servlet-name>
         <servlet-class>SearchByName</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NotificationsServlet</servlet-name>
+        <servlet-class>Notifications</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -108,6 +112,10 @@
     <servlet-mapping>
         <servlet-name>SearchByNameServlet</servlet-name>
         <url-pattern>/searchByName</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationsServlet</servlet-name>
+        <url-pattern>/notifications</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 

@@ -37,7 +37,7 @@ public class NotificationDto {
         return createDate;
     }
 
-    public Boolean isRead() {
+    public Boolean getRead() {
         return read;
     }
 
