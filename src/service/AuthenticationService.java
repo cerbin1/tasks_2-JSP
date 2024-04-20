@@ -1,5 +1,7 @@
 package service;
 
+import db.dao.UserActivationLinkDao;
+import db.dao.UserDao;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -9,6 +11,10 @@ import java.util.Optional;
 
 public class AuthenticationService {
     private final UserService userService;
+
+    public AuthenticationService() {
+        this.userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
+    }
 
     public AuthenticationService(UserService userService) {
         this.userService = userService;

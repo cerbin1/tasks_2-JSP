@@ -1,6 +1,7 @@
 package db.dao;
 
 import db.DbConnection;
+import service.dto.AdminPanelUserDto;
 import service.dto.UserDto;
 
 import java.sql.Connection;
@@ -24,7 +25,9 @@ public class UserDao {
     private static final String SQL_ACTIVATE_USER = "UPDATE \"user\" SET active = TRUE WHERE username = ?";
     private static final String SQL_IS_USER_ACTIVE = "SELECT * FROM \"user\" WHERE username = ? AND active = TRUE";
     private static final String SQL_GET_ALL_USERS = "SELECT id, name, surname, username FROM \"user\"";
-    private static final String SQL_GET_ALL_USERS_FOR_ADMIN_PANEL = "SELECT id, email, username, name, surname, active, (SELECT COUNT(*) FROM chat_message WHERE chat_message.sender_id = \"user\".id) AS messagesCount FROM \"user\"";
+    private static final String SQL_GET_ALL_USERS_FOR_ADMIN_PANEL = "SELECT id, email, username, name, surname, active" +
+//            ", (SELECT COUNT(*) FROM chat_message WHERE chat_message.sender_id = \"user\".id) AS messagesCount" +
+            " FROM \"user\"";
     private static final String SQL_REMOVE_USER = "DELETE FROM \"user\" WHERE id = ?";
     private static final String SQL_GET_NUMBER_OF_USERS = "SELECT COUNT(*) FROM \"user\"";
 
@@ -179,6 +182,32 @@ public class UserDao {
                             resultSet.getString("name"),
                             resultSet.getString("surname"),
                             resultSet.getString("username")));
+                }
+                return allUsers;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<AdminPanelUserDto> findAllForAdminPanel() {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_ALL_USERS_FOR_ADMIN_PANEL)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                List<AdminPanelUserDto> allUsers = new ArrayList<>();
+                while (resultSet.next()) {
+                    allUsers.add(new AdminPanelUserDto(
+                            resultSet.getLong(1),
+                            resultSet.getString("email"),
+                            resultSet.getString("username"),
+                            resultSet.getString("name"),
+                            resultSet.getString("surname"),
+                            resultSet.getBoolean("active")
+//                            resultSet.getLong("messagesCount")
+                    ));
                 }
                 return allUsers;
             } catch (SQLException e) {

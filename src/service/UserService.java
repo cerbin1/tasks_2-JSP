@@ -2,6 +2,7 @@ package service;
 
 import db.dao.UserActivationLinkDao;
 import db.dao.UserDao;
+import service.dto.AdminPanelUserDto;
 import service.dto.UserDto;
 
 import java.nio.charset.StandardCharsets;
@@ -86,5 +87,9 @@ public class UserService {
 
     public List<UserDto> getUsersData() {
         return userDao.findAll();
+    }
+
+    public List<AdminPanelUserDto> getUsersForAdminPanel() {
+        return userDao.findAllForAdminPanel();
     }
 }
