@@ -8,6 +8,7 @@ import service.dto.PriorityDto;
 import service.dto.UserDto;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static conf.ApplicationProperties.APP_BASE_PATH;
@@ -17,12 +18,14 @@ public class CreateTask extends HttpServlet {
     private final PriorityService priorityService;
     private final TaskService taskService;
     private final NotificationService notificationService;
+    private final TaskReminderService taskReminderService;
 
     public CreateTask() {
         this.taskService = new TaskService(new TaskDao());
         this.userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
         this.priorityService = new PriorityService(new PriorityDao());
         this.notificationService = new NotificationService(new NotificationDao());
+        this.taskReminderService = new TaskReminderService(new TaskReminderDao());
     }
 
     @Override
@@ -49,6 +52,7 @@ public class CreateTask extends HttpServlet {
             request.getServletContext().getRequestDispatcher("/navbar.jsp").forward(request, response);
         } else {
             notificationService.createNotification("New Task", taskId, creatorId);
+            taskReminderService.createTaskReminder(taskId, LocalDateTime.parse(deadline).minusHours(1));
             response.sendRedirect(APP_BASE_PATH + "/tasks");
         }
     }

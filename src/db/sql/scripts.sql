@@ -65,18 +65,18 @@ ALTER TABLE notification DROP CONSTRAINT IF EXISTS fk9y21adhxn0ayjhfocscqox7bh;
 ALTER TABLE notification ADD CONSTRAINT fk2ktjq1slw0ldkuy5rx8fbte2p FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
 ALTER TABLE notification ADD CONSTRAINT fk9y21adhxn0ayjhfocscqox7bh FOREIGN KEY (user_id) REFERENCES "user"(id);
 
---CREATE TABLE IF NOT EXISTS task_reminder (
---	id bigserial NOT NULL,
---	sent bool NOT NULL DEFAULT false,
---	task_id int8 NOT NULL,
---	planned_send_date timestamp(6) NOT NULL,
---	sent_date timestamp(6) NULL,
---	CONSTRAINT task_reminder_pkey PRIMARY KEY (id),
---	CONSTRAINT uk_r27tf7809aiy305ogagleyl8x UNIQUE (task_id)
---);
---ALTER TABLE task_reminder DROP CONSTRAINT IF EXISTS fkd028lj86vw4icrkf6ss76njp3;
---ALTER TABLE task_reminder ADD CONSTRAINT fkd028lj86vw4icrkf6ss76njp3 FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
---
+CREATE TABLE IF NOT EXISTS task_reminder (
+	id bigserial NOT NULL,
+	sent bool NOT NULL DEFAULT false,
+	task_id int8 NOT NULL,
+	planned_send_date timestamp(6) NOT NULL,
+	sent_date timestamp(6) NULL,
+	CONSTRAINT task_reminder_pkey PRIMARY KEY (id),
+	CONSTRAINT uk_r27tf7809aiy305ogagleyl8x UNIQUE (task_id)
+);
+ALTER TABLE task_reminder DROP CONSTRAINT IF EXISTS fkd028lj86vw4icrkf6ss76njp3;
+ALTER TABLE task_reminder ADD CONSTRAINT fkd028lj86vw4icrkf6ss76njp3 FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
+
 --CREATE TABLE IF NOT EXISTS chat_message (
 --	id bigserial NOT NULL,
 --	"content" varchar(255) NOT NULL,
