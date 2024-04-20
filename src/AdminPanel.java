@@ -10,6 +10,8 @@ import service.UserService;
 
 import java.io.IOException;
 
+import static conf.ApplicationProperties.APP_BASE_PATH;
+
 public class AdminPanel extends HttpServlet {
 
     private final AuthenticationService authenticationService;
@@ -25,6 +27,21 @@ public class AdminPanel extends HttpServlet {
         if (authenticationService.authenticateAdmin(request)) {
             request.setAttribute("users", userService.getUsersForAdminPanel());
             request.getServletContext().getRequestDispatcher("/adminPanel.jsp").forward(request, response);
+        } else {
+            request.setAttribute("error", "Authorization failed");
+            request.getRequestDispatcher("navbar.jsp").forward(request, response);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (authenticationService.authenticateAdmin(request)) {
+            if (userService.removeUser(request.getParameter("userId"))) {
+                response.sendRedirect(APP_BASE_PATH + "/adminPanel");
+            } else {
+                request.setAttribute("error", "User removal failed");
+                request.getRequestDispatcher("navbar.jsp").forward(request, response);
+            }
         } else {
             request.setAttribute("error", "Authorization failed");
             request.getRequestDispatcher("navbar.jsp").forward(request, response);

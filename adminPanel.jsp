@@ -45,7 +45,12 @@
                                 </c:if>
                             </td>
                             <td>0 TODO</td>
-                            <td>Remove</td>
+                            <td>
+                                <form action="/tasks_2-JSP/removeUser?userId=${user.id}"
+                                    method="post">
+                                    <button class="btn btn-danger" type="submit">Remove</button>
+                                </form>
+                                </td>
                         </tr>
                     </c:forEach>
                 </tbody>

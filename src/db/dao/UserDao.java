@@ -217,4 +217,18 @@ public class UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean removeById(Long userId) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_REMOVE_USER)) {
+                preparedStatement.setLong(1, userId);
+                return preparedStatement.executeUpdate() == 1;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
