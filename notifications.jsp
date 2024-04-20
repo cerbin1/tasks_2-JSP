@@ -10,26 +10,27 @@
 
     <body>
         <jsp:include page="navbar.jsp" />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Task name</th>
-                    <th scope="col">Create date</th>
-                    <th scope="col">Is read</th>
-                    <th scope="col">Read date</th>
-                    <th scope="col">User assigned</th>
-                    <th scope="col">Link</th>
-                    <th scope="col">Mark as read</th>
-                    <th scope="col">Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:if test="${empty notifications}">
-                    <span>No results</span>
-                </c:if>
-                <c:if test="${not empty notifications}">
+        <c:if test="${empty notifications}">
+            <span>No results</span>
+        </c:if>
+        <c:if test="${not empty notifications}">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Task name</th>
+                        <th scope="col">Create date</th>
+                        <th scope="col">Is read</th>
+                        <th scope="col">Read date</th>
+                        <th scope="col">User assigned</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">Mark as read</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <c:forEach var="notification" items="${notifications}">
                         <tr>
                             <th scope="row">${notification.id}</th>
@@ -64,9 +65,9 @@
                             </td>
                         </tr>
                     </c:forEach>
-                </c:if>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </c:if>
     </body>
 
 </html>

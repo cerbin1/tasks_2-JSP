@@ -9,25 +9,24 @@
 
     <body>
         <jsp:include page="navbar.jsp" />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Deadline</th>
-                    <th scope="col">Assignee</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Is Completed</th>
-                    <th scope="col">Complete date</th>
-                    <th scope="col">Details</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <c:if test="${empty tasks}">
-                    taskList.append("<span>No results</span>");
-                </c:if>
-                <c:if test="${not empty tasks}">
+        <c:if test="${empty tasks}">
+            <span>No results</span>
+        </c:if>
+        <c:if test="${not empty tasks}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Assignee</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Is Completed</th>
+                        <th scope="col">Complete date</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <c:forEach var="task" items="${tasks}">
                         <tr>
                             <th scope="row">${task.id}</th>
@@ -51,9 +50,9 @@
                             <td><a href="details?taskId=${task.id}">Details</a></td>
                         </tr>
                     </c:forEach>
-                </c:if>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </c:if>
     </body>
 
 </html>
