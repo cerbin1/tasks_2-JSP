@@ -33,6 +33,12 @@ public class AuthenticationFilter extends HttpFilter {
     }
 
     private static boolean noAuthenticationRequired(String path) {
-        return path.equals("/index.jsp") || path.equals("/login") || path.equals("/register.jsp") || path.equals("/authError.html");
+        return path.equals("/index.jsp") ||
+                path.equals("/login") ||
+                path.equals("/register.jsp") ||
+                path.equals("/authError.html") ||
+                path.equals("/logo.svg") ||
+                path.equals("/bootstrap.min.css") ||
+                path.equals("/style.css");
     }
 }
