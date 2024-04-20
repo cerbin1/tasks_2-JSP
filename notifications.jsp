@@ -56,7 +56,13 @@
                             </td>
                             <td>${task.userNameAssigned}</td>
                             <td><a href="details?taskId=${notification.taskId}">Go to task</a></td>
-                            <td>Mark as read</td>
+                            <td>
+                                <form action="/tasks_2-JSP/notifications?notificationId=${notification.id}"
+                                    method="post">
+                                    <button class="btn btn-success ${notification.read ? 'disabled' : ''}"
+                                        type="submit">Mark as read</button>
+                                </form>
+                            </td>
                             <td>
                                 <form action="/tasks_2-JSP/removeNotification?notificationId=${notification.id}"
                                     method="post">
