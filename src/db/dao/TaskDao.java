@@ -253,4 +253,20 @@ public class TaskDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void markAsCompleted(Long taskId) {
+        DbConnection dbConnection = new DbConnection();
+        Connection connection = dbConnection.createConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_MARK_TASK_AS_COMPLETED)) {
+            preparedStatement.setLong(1, taskId);
+            boolean taskUpdated = preparedStatement.executeUpdate() == 1;
+            if (!taskUpdated) {
+                throw new SQLException();
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

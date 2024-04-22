@@ -106,6 +106,10 @@
         <url-pattern>/tasks</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>TasksServlet</servlet-name>
+        <url-pattern>/markAsCompleted</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EditTaskServlet</servlet-name>
         <url-pattern>/editTask</url-pattern>
     </servlet-mapping>

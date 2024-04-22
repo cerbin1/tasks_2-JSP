@@ -51,4 +51,8 @@ public class TaskService {
     public List<TaskDto> getTasksByName(String name) {
         return taskDao.findAllByName(name);
     }
+
+    public void completeTask(String taskId) {
+        taskDao.markAsCompleted(Long.parseLong(taskId));
+    }
 }
