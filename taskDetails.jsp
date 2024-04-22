@@ -39,7 +39,8 @@
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="col-md-3">
                             <div class="input-group">
-                                <div id="${subtask.sequence}" class="col-md-9" style="text-align: center">${subtask.name}
+                                <div id="${subtask.sequence}" class="col-md-9" style="text-align: center">
+                                    ${subtask.name}
                                 </div>
                                 <button type="button" class="btn btn-success col-md-3"
                                     onclick="document.getElementById('${subtask.getSequence()}').style.textDecoration = 'line-through'">Done</button>
@@ -67,6 +68,19 @@
                 <button type="submit" class="btn btn-primary">Send Message</button>
             </form>
             <h1>Files</h1>
+
+            <c:if test="${empty files}">
+                <span>No files.</span>
+            </c:if>
+            <c:if test="${not empty files}">
+                <c:forEach var="file" items="${files}">
+                    <div>
+                        <a href="/tasks_2-JSP/download?filename=${file.name}&filetype=${file.type}">
+                            ${file.name}
+                        </a>
+                    </div>
+                </c:forEach>
+            </c:if>
             <h1>Worklogs</h1>
             <form action="/tasks_2-JSP/markAsCompleted?taskId=${task.id}" method="post" style="display: inline">
                 <button type="submit" class="btn btn-success">Mark as completed</button>

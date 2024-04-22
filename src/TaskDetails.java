@@ -20,9 +20,11 @@ public class TaskDetails extends HttpServlet {
     private final TaskService taskService;
     private final ChatMessageService chatMessageService;
     private final SubtaskService subtaskService;
+    private final TaskFileDao taskFileDao;
 
     public TaskDetails() {
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao());
+        this.taskFileDao = new TaskFileDao();
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), taskFileDao);
         this.chatMessageService = new ChatMessageService(new ChatMessageDao());
         this.subtaskService = new SubtaskService(new SubtaskDao());
     }
@@ -34,6 +36,7 @@ public class TaskDetails extends HttpServlet {
         request.setAttribute("task", task);
         request.setAttribute("chatMessages", chatMessageService.getTaskChatMessages(taskId));
         request.setAttribute("subtasks", subtaskService.getTaskSubtasks(taskId));
+        request.setAttribute("files", taskFileDao.findAllForTaskId(Long.valueOf(taskId)));
         request.getServletContext().getRequestDispatcher("/taskDetails.jsp").forward(request, response);
     }
 }
