@@ -3,12 +3,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.EmailSendingService;
-import service.PriorityService;
-import service.TaskService;
-import service.UserService;
+import service.*;
 import service.dto.EditTaskDto;
 import service.dto.PriorityDto;
+import service.dto.SubtaskDto;
 import service.dto.UserDto;
 
 import java.io.IOException;
@@ -21,11 +19,13 @@ public class EditTask extends HttpServlet {
     private final UserService userService;
     private final TaskService taskService;
     private final PriorityService priorityService;
+    private final SubtaskService subtaskService;
 
     public EditTask() {
         this.userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
         this.taskService = new TaskService(new TaskDao(), new SubtaskDao());
         this.priorityService = new PriorityService(new PriorityDao());
+        this.subtaskService = new SubtaskService(new SubtaskDao());
     }
 
     @Override
@@ -34,10 +34,12 @@ public class EditTask extends HttpServlet {
         EditTaskDto task = taskService.getTaskForEdit(taskId);
         List<UserDto> usersData = userService.getUsersData();
         List<PriorityDto> prioritiesData = priorityService.getPrioritiesData();
+        List<SubtaskDto> subtasksData = subtaskService.getTaskSubtasks(taskId);
 
         request.setAttribute("task", task);
         request.setAttribute("users", usersData);
         request.setAttribute("priorities", prioritiesData);
+        request.setAttribute("subtasks", subtasksData);
         request.getServletContext().getRequestDispatcher("/editTask.jsp").forward(request, response);
     }
 
@@ -48,7 +50,10 @@ public class EditTask extends HttpServlet {
         String deadline = request.getParameter("deadline");
         String userId = request.getParameter("user");
         String priorityId = request.getParameter("priority");
-        if (taskService.updateTask(taskId, name, deadline, userId, priorityId)) {
+        String[] subtasksNames = request.getParameterValues("subtasksNames[]");
+        String[] subtasksIds = request.getParameterValues("subtasksIds[]");
+        String[] newSubtasks = request.getParameterValues("newSubtasks[]");
+        if (taskService.updateTask(taskId, name, deadline, userId, priorityId, subtasksNames, subtasksIds, newSubtasks)) {
             response.sendRedirect(APP_BASE_PATH + "/tasks");
         } else {
             request.setAttribute("error", "Task edition failed");

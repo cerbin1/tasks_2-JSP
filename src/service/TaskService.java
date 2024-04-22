@@ -33,13 +33,22 @@ public class TaskService {
         return taskDao.findByIdForEdit(Long.parseLong(taskId));
     }
 
-    public boolean updateTask(String taskId, String name, String deadline, String userId, String priorityId) {
+    public boolean updateTask(String taskId, String name, String deadline, String userId, String priorityId,
+                              String[] subtasksNames,
+                              String[] subtasksIds,
+                              String[] newSubtasks) {
         boolean success = taskDao.updateById(
                 Long.parseLong(taskId),
                 name,
                 LocalDateTime.parse(deadline),
                 Long.parseLong(userId),
                 Long.parseLong(priorityId));
+        if (subtasksIds != null) {
+            subtaskDao.updateSubtasks(subtasksNames, subtasksIds);
+        }
+        if (newSubtasks != null) {
+            subtaskDao.createSubtasks(Long.parseLong(taskId), newSubtasks);
+        }
         return success;
     }
 

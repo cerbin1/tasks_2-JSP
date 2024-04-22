@@ -67,7 +67,6 @@
                 <button type="submit" class="btn btn-primary">Send Message</button>
             </form>
             <h1>Files</h1>
-            <h1>Files</h1>
             <h1>Worklogs</h1>
             <form action="/tasks_2-JSP/markAsCompleted?taskId=${task.id}" method="post" style="display: inline">
                 <button type="submit" class="btn btn-success">Mark as completed</button>

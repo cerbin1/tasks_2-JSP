@@ -35,19 +35,4 @@ public class TaskDetails extends HttpServlet {
         request.setAttribute("subtasks", subtaskService.getTaskSubtasks(taskId));
         request.getServletContext().getRequestDispatcher("/taskDetails.jsp").forward(request, response);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String taskId = request.getParameter("taskId");
-        String name = request.getParameter("name");
-        String deadline = request.getParameter("deadline");
-        String userId = request.getParameter("user");
-        String priorityId = request.getParameter("priority");
-        if (taskService.updateTask(taskId, name, deadline, userId, priorityId)) {
-            response.sendRedirect(APP_BASE_PATH + "/tasks");
-        } else {
-            request.setAttribute("error", "Task edition failed");
-            request.getServletContext().getRequestDispatcher("/navbar.jsp").forward(request, response);
-        }
-    }
 }

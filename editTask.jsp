@@ -5,6 +5,22 @@
     <head>
         <title>Edit Task</title>
         <link rel="stylesheet" href="bootstrap.min.css">
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var addSubtaskButton = document.getElementById('addSubtask');
+                addSubtaskButton.addEventListener('click', function () {
+                    var newSubtask = document.createElement('input');
+                    newSubtask.type = 'text';
+                    newSubtask.classList.add('form-control');
+                    newSubtask.style.textAlign = 'center';
+                    newSubtask.name = 'newSubtasks[]';
+                    newSubtask.placeholder = 'Subtask name';
+
+                    var subtasksContainer = document.getElementById('subtasks');
+                    subtasksContainer.appendChild(newSubtask);
+                });
+            });
+        </script>
     </head>
 
     <body>
@@ -53,6 +69,20 @@
                 <h1>Labels</h1>
                 <h1>Category</h1>
                 <h1>Subtasks</h1>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div id="subtasks" class="form-group col-md-3">
+                        <c:forEach var="subtask" items="${subtasks}">
+                            <div class="input-group">
+                                <input class="form-control col-md-9" style="text-align: center;" name="subtasksNames[]"
+                                    value="${subtask.name}" />
+                                <input type="hidden" name="subtasksIds[]" value="${subtask.id}" />
+                                <a href="/tasks_2-JSP/removeSubtask?taskId=${task.id}" type="submit"
+                                    class="btn btn-danger col-md-3">Remove</a>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                <button id="addSubtask" type="button" class="btn btn-success">Add subtask</button>
                 <h1>Files upload</h1>
                 <h1>Worklogs</h1>
                 <div class="form-group row">
