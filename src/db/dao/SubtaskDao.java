@@ -16,15 +16,16 @@ public class SubtaskDao {
     private static final String SQL_DELETE_SUBTASK = "DELETE FROM subtask WHERE id = ?";
     private static final String SQL_UPDATE_SUBTASK = "UPDATE subtask SET name = ? WHERE id = ?";
     private static final String SQL_GET_NUMBER_OF_SUBTASKS = "SELECT COUNT(*) FROM subtask";
+    private static final String SQL_GET_NUMBER_OF_SUBTASKS_FOR_TASK = "SELECT COUNT(*) FROM subtask WHERE task_id=?";
 
     public void createSubtasks(Long taskId, String[] subtaskNames) {
-        for (int i = 0; i < subtaskNames.length; i++) {
+        for (long i = 0L, nextSequence = getTaskNUmberOfSubtasks(taskId); i < subtaskNames.length; i++, nextSequence++) {
             DbConnection dbConnection = new DbConnection();
             Connection connection = dbConnection.createConnection();
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_SUBTASK)) {
                 preparedStatement.setLong(1, taskId);
-                preparedStatement.setString(2, subtaskNames[i]);
-                preparedStatement.setLong(3, i);
+                preparedStatement.setString(2, subtaskNames[(int) i]);
+                preparedStatement.setLong(3, nextSequence);
                 preparedStatement.executeUpdate();
                 connection.close();
             } catch (SQLException e) {
@@ -86,6 +87,23 @@ public class SubtaskDao {
         DbConnection dbConnection = new DbConnection();
         try (Connection connection = dbConnection.createConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_NUMBER_OF_SUBTASKS)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                return resultSet.getLong(1);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Long getTaskNUmberOfSubtasks(Long taskId) {
+        DbConnection dbConnection = new DbConnection();
+        try (Connection connection = dbConnection.createConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_NUMBER_OF_SUBTASKS_FOR_TASK)) {
+                preparedStatement.setLong(1, taskId);
+
                 ResultSet resultSet = preparedStatement.executeQuery();
                 resultSet.next();
                 return resultSet.getLong(1);
