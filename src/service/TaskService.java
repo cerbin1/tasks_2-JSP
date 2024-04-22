@@ -97,4 +97,9 @@ public class TaskService {
     public List<TaskDto> getTasksByCategory(String category) {
         return taskDao.findAllByCategory(category);
     }
+
+
+    public List<TaskDto> getTasksByLabel(String label) {
+        return taskDao.findAllByLabel(label);
+    }
 }

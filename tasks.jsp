@@ -78,6 +78,12 @@
                 <button type="submit" class="btn btn-primary">Search by category</button>
             </form>
         </div>
+        <div class="form-group row">
+            <form action="/tasks_2-JSP/searchByLabel" method="get">
+                <input class="form-control" name="label" />
+                <button type="submit" class="btn btn-primary">Search by label</button>
+            </form>
+        </div>
 
     </body>
 

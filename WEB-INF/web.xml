@@ -102,6 +102,10 @@
         <servlet-name>RemoveLabelServlet</servlet-name>
         <servlet-class>RemoveLabel</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchByLabelServlet</servlet-name>
+        <servlet-class>SearchByLabel</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -193,6 +197,10 @@
     <servlet-mapping>
         <servlet-name>RemoveLabelServlet</servlet-name>
         <url-pattern>/removeLabel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchByLabelServlet</servlet-name>
+        <url-pattern>/searchByLabel</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 
