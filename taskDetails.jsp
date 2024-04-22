@@ -32,6 +32,24 @@
             <h1>Category</h1>
             <h1>Subtasks</h1>
             <h1>Chat</h1>
+            <c:if test="${empty chatMessages}">
+                <span>No messages yet.</span>
+            </c:if>
+            <c:if test="${not empty chatMessages}">
+                <c:forEach var="message" items="${chatMessages}">
+                    <div class="d-flex ${message.senderId eq sessionScope.userId? 'flex-row' : 'flex-row-reverse'}">
+                        <div>
+                            <b>${message.senderName}:</b>
+                            <p>${message.content}</p>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:if>
+            <form action="/tasks_2-JSP/createChatMessage?taskId=${task.id}" method="post">
+                <input type="text" class="form-control" name="messageContent" placeholder='Message content' />
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+            <h1>Files</h1>
             <h1>Files</h1>
             <h1>Worklogs</h1>
             <form action="/tasks_2-JSP/markAsCompleted?taskId=${task.id}" method="post" style="display: inline">
