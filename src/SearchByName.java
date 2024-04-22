@@ -1,3 +1,4 @@
+import db.dao.SubtaskDao;
 import db.dao.TaskDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +13,7 @@ public class SearchByName extends HttpServlet {
     private final TaskService taskService;
 
     public SearchByName() {
-        this.taskService = new TaskService(new TaskDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao());
     }
 
     @Override

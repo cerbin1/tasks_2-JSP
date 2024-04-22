@@ -91,16 +91,16 @@ ALTER TABLE chat_message DROP CONSTRAINT IF EXISTS fkgiqeap8ays4lf684x7m0r2729;
 ALTER TABLE chat_message ADD CONSTRAINT fkgiqeap8ays4lf684x7m0r2729 FOREIGN KEY (sender_id) REFERENCES "user"(id);
 ALTER TABLE chat_message ADD CONSTRAINT fke3tn55xm4h4uog1wgawrx873y FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
 
---CREATE TABLE IF NOT EXISTS subtask (
---	id bigserial NOT NULL,
---	"name" varchar(255) NOT NULL,
---	"sequence" int8 NOT NULL,
---	task_id int8 NULL,
---	CONSTRAINT subtask_pkey PRIMARY KEY (id)
---);
---ALTER TABLE subtask DROP CONSTRAINT IF EXISTS fksvs126nsj9ohhvwjog5ddp76x;
---ALTER TABLE subtask ADD CONSTRAINT fksvs126nsj9ohhvwjog5ddp76x FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
---
+CREATE TABLE IF NOT EXISTS subtask (
+	id bigserial NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"sequence" int8 NOT NULL,
+	task_id int8 NULL,
+	CONSTRAINT subtask_pkey PRIMARY KEY (id)
+);
+ALTER TABLE subtask DROP CONSTRAINT IF EXISTS fksvs126nsj9ohhvwjog5ddp76x;
+ALTER TABLE subtask ADD CONSTRAINT fksvs126nsj9ohhvwjog5ddp76x FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
+
 --CREATE TABLE IF NOT EXISTS task_file (
 --	"name" varchar(255) NOT NULL,
 --	"type" varchar(255) NOT NULL,

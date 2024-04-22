@@ -1,5 +1,6 @@
 package service;
 
+import db.dao.SubtaskDao;
 import db.dao.TaskDao;
 import service.dto.EditTaskDto;
 import service.dto.TaskDto;
@@ -9,13 +10,19 @@ import java.util.List;
 
 public class TaskService {
     private final TaskDao taskDao;
+    private final SubtaskDao subtaskDao;
 
-    public TaskService(TaskDao taskDao) {
+    public TaskService(TaskDao taskDao, SubtaskDao subtaskDao) {
         this.taskDao = taskDao;
+        this.subtaskDao = subtaskDao;
     }
 
-    public Long create(String name, String deadline, String userId, String priorityId, String creatorId) {
-        return taskDao.createTask(name, LocalDateTime.parse(deadline), Long.parseLong(userId), Long.parseLong(priorityId), Long.parseLong(creatorId));
+    public Long create(String name, String deadline, String userId, String priorityId, String creatorId, String[] subtasks) {
+        Long taskId = taskDao.createTask(name, LocalDateTime.parse(deadline), Long.parseLong(userId), Long.parseLong(priorityId), Long.parseLong(creatorId));
+        if (subtasks != null) {
+            subtaskDao.createSubtasks(taskId, subtasks);
+        }
+        return taskId;
     }
 
     public List<TaskDto> getAllTasks() {

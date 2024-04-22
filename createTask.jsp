@@ -5,6 +5,21 @@
     <head>
         <title>Create task</title>
         <link rel="stylesheet" href="bootstrap.min.css">
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var addSubtaskButton = document.getElementById('addSubtask');
+                addSubtaskButton.addEventListener('click', function () {
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.classList.add('form-control');
+                    input.style.textAlign = 'center';
+                    input.name = 'subtasks[]';
+                    input.placeholder = 'Subtask name';
+                    var subtasksContainer = document.getElementById('subtasks');
+                    subtasksContainer.appendChild(input);
+                });
+            });
+        </script>
     </head>
 
     <body>
@@ -48,6 +63,11 @@
                 <h1>Labels</h1>
                 <h1>Category</h1>
                 <h1>Subtasks</h1>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div id="subtasks" class="form-group col-md-3">
+                    </div>
+                </div>
+                <button id="addSubtask" type="button" class="btn btn-success">Add subtask</button>
                 <h1>Files upload</h1>
                 <div class="form-group row">
                     <div class="form-control">

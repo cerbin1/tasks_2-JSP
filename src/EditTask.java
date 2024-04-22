@@ -1,7 +1,4 @@
-import db.dao.PriorityDao;
-import db.dao.TaskDao;
-import db.dao.UserActivationLinkDao;
-import db.dao.UserDao;
+import db.dao.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +24,7 @@ public class EditTask extends HttpServlet {
 
     public EditTask() {
         this.userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
-        this.taskService = new TaskService(new TaskDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao());
         this.priorityService = new PriorityService(new PriorityDao());
     }
 
