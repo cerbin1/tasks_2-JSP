@@ -76,7 +76,7 @@
                                 <input class="form-control col-md-9" style="text-align: center;" name="subtasksNames[]"
                                     value="${subtask.name}" />
                                 <input type="hidden" name="subtasksIds[]" value="${subtask.id}" />
-                                <a href="/tasks_2-JSP/removeSubtask?taskId=${task.id}" type="submit"
+                                <a href="/tasks_2-JSP/removeSubtask?taskId=${task.id}&subtaskId=${subtask.id}" type="submit"
                                     class="btn btn-danger col-md-3">Remove</a>
                             </div>
                         </c:forEach>
