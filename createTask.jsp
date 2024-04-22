@@ -25,7 +25,7 @@
     <body>
         <jsp:include page="navbar.jsp" />
         <div class="container">
-            <form action="/tasks_2-JSP/createTask" method="post">
+            <form action="/tasks_2-JSP/createTask" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
@@ -69,6 +69,7 @@
                 </div>
                 <button id="addSubtask" type="button" class="btn btn-success">Add subtask</button>
                 <h1>Files upload</h1>
+                      <input type="file" multiple name="files"/>
                 <div class="form-group row">
                     <div class="form-control">
                         <button type="submit" class="btn btn-primary">Create Task</button>

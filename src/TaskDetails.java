@@ -1,6 +1,7 @@
 import db.dao.ChatMessageDao;
 import db.dao.SubtaskDao;
 import db.dao.TaskDao;
+import db.dao.TaskFileDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class TaskDetails extends HttpServlet {
     private final SubtaskService subtaskService;
 
     public TaskDetails() {
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao());
         this.chatMessageService = new ChatMessageService(new ChatMessageDao());
         this.subtaskService = new SubtaskService(new SubtaskDao());
     }

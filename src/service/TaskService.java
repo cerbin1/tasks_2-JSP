@@ -2,6 +2,7 @@ package service;
 
 import db.dao.SubtaskDao;
 import db.dao.TaskDao;
+import db.dao.TaskFileDao;
 import service.dto.EditTaskDto;
 import service.dto.TaskDto;
 
@@ -11,10 +12,12 @@ import java.util.List;
 public class TaskService {
     private final TaskDao taskDao;
     private final SubtaskDao subtaskDao;
+    private final TaskFileDao taskFileDao;
 
-    public TaskService(TaskDao taskDao, SubtaskDao subtaskDao) {
+    public TaskService(TaskDao taskDao, SubtaskDao subtaskDao, TaskFileDao taskFileDao) {
         this.taskDao = taskDao;
         this.subtaskDao = subtaskDao;
+        this.taskFileDao = taskFileDao;
     }
 
     public Long create(String name, String deadline, String userId, String priorityId, String creatorId, String[] subtasks) {
@@ -70,5 +73,10 @@ public class TaskService {
 
     public void completeTask(String taskId) {
         taskDao.markAsCompleted(Long.parseLong(taskId));
+    }
+
+
+    public void saveTaskFileInfo(String fileName, String contentType, Long taskId) {
+        taskFileDao.create(fileName, contentType, taskId);
     }
 }

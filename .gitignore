@@ -33,3 +33,7 @@ replay_pid*
 !/WEB-INF/lib/*.jar
 
 sources.txt
+
+# user files upload
+/WEB-INF/uploads/*
+!/WEB-INF/uploads/.gitkeep

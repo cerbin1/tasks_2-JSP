@@ -1,5 +1,6 @@
 import db.dao.SubtaskDao;
 import db.dao.TaskDao;
+import db.dao.TaskFileDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ public class RemoveTask extends HttpServlet {
     private final TaskService taskService;
 
     public RemoveTask() {
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao());
     }
 
     @Override
