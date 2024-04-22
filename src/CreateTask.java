@@ -37,9 +37,11 @@ public class CreateTask extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<UserDto> usersData = userService.getUsersData();
         List<PriorityDto> prioritiesData = priorityService.getPrioritiesData();
+        List<String> categoriesData = TaskCategory.listOfValues();;
 
         request.setAttribute("users", usersData);
         request.setAttribute("priorities", prioritiesData);
+        request.setAttribute("categories", categoriesData);
         request.getServletContext().getRequestDispatcher("/createTask.jsp").forward(request, response);
     }
 
@@ -51,8 +53,9 @@ public class CreateTask extends HttpServlet {
         String creatorId = request.getParameter("user");
         String priorityId = request.getParameter("priority");
         String[] subtasks = request.getParameterValues("subtasks[]");
+        String category = request.getParameter("category");
         String userId = (String) request.getSession(false).getAttribute("userId");
-        Long taskId = taskService.create(name, deadline, userId, priorityId, creatorId, subtasks);
+        Long taskId = taskService.create(name, deadline, userId, priorityId, creatorId, subtasks, category);
         if (taskId == null) {
             request.setAttribute("error", "Task creation failed");
             request.getServletContext().getRequestDispatcher("/navbar.jsp").forward(request, response);

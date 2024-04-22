@@ -30,6 +30,10 @@
             </div>
             <h1>Labels</h1>
             <h1>Category</h1>
+              <div class="row">
+                <label class="col-sm-4 col-form-label fw-bold">Category</label>
+                <p class="col-sm-8">${task.category}</p>
+              </div>
             <h1>Subtasks</h1>
             <c:if test="${empty subtasks}">
                 <span>No subtasks yet.</span>

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskDao {
-    private static final String SQL_CREATE_TASK = "INSERT INTO task (\"name\", deadline, assignee_id, priority_id, creator_id) VALUES (?, ?, ?, ?, ?) RETURNING id";
+    private static final String SQL_CREATE_TASK = "INSERT INTO task (\"name\", deadline, assignee_id, priority_id, creator_id, category) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
     private static final String SQL_GET_ALL_TASKS = "SELECT task.id, task.category, task.name, task.deadline, task.completed, task.complete_date," +
             " \"user\".name as assigneeName, priority.value as priorityValue " +
 //            "(SELECT COUNT(*) FROM subtask WHERE subtask.task_id = task.id) as subtasksCount, (SELECT COUNT(*) FROM worklog WHERE worklog.task_id = task.id) as worklogsCount " +
@@ -41,7 +41,7 @@ public class TaskDao {
             "JOIN \"user\" ON task.assignee_id = \"user\".id " +
             "WHERE task.id = ?";
 
-    private static final String SQL_UPDATE_TASK = "UPDATE task SET name = ?, deadline = ?, assignee_id = ?, priority_id = ? WHERE id = ?";
+    private static final String SQL_UPDATE_TASK = "UPDATE task SET name = ?, deadline = ?, assignee_id = ?, priority_id = ?, category= ? WHERE id = ?";
 
     private static final String SQL_DELETE_TASK_BY_ID = "DELETE FROM task WHERE id = ?";
     private static final String SQL_GET_TASKS_BY_NAME = "SELECT task.id, task.category, task.name, task.deadline, task.completed, task.complete_date," +
@@ -69,7 +69,7 @@ public class TaskDao {
     private static final String SQL_GET_NUMBER_OF_CREATED_TASKS = "SELECT COUNT(*) FROM task";
     private static final String SQL_GET_NUMBER_OF_COMPLETED_TASKS = "SELECT COUNT(*) FROM task WHERE completed = true";
 
-    public Long createTask(String name, LocalDateTime deadline, Long userId, Long priorityId, Long creatorId) {
+    public Long createTask(String name, LocalDateTime deadline, Long userId, Long priorityId, Long creatorId, String category) {
         DbConnection dbConnection = new DbConnection();
         Connection connection = dbConnection.createConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_TASK)) {
@@ -78,6 +78,7 @@ public class TaskDao {
             preparedStatement.setLong(3, userId);
             preparedStatement.setLong(4, priorityId);
             preparedStatement.setLong(5, creatorId);
+            preparedStatement.setString(6, category);
 
             if (preparedStatement.execute() && preparedStatement.getResultSet().next()) {
                 connection.close();
@@ -138,7 +139,7 @@ public class TaskDao {
         }
     }
 
-    public boolean updateById(Long taskId, String name, LocalDateTime deadline, Long assigneeId, Long priorityId) {
+    public boolean updateById(Long taskId, String name, LocalDateTime deadline, Long assigneeId, Long priorityId, String category) {
         DbConnection dbConnection = new DbConnection();
         Connection connection = dbConnection.createConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TASK)) {
@@ -146,6 +147,7 @@ public class TaskDao {
             preparedStatement.setObject(2, deadline);
             preparedStatement.setLong(3, assigneeId);
             preparedStatement.setLong(4, priorityId);
+            preparedStatement.setString(5, category);
             preparedStatement.setLong(5, taskId);
             boolean taskUpdated = preparedStatement.executeUpdate() == 1;
             if (!taskUpdated) {

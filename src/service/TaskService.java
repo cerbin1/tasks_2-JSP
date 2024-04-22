@@ -20,8 +20,8 @@ public class TaskService {
         this.taskFileDao = taskFileDao;
     }
 
-    public Long create(String name, String deadline, String userId, String priorityId, String creatorId, String[] subtasks) {
-        Long taskId = taskDao.createTask(name, LocalDateTime.parse(deadline), Long.parseLong(userId), Long.parseLong(priorityId), Long.parseLong(creatorId));
+    public Long create(String name, String deadline, String userId, String priorityId, String creatorId, String[] subtasks, String category) {
+        Long taskId = taskDao.createTask(name, LocalDateTime.parse(deadline), Long.parseLong(userId), Long.parseLong(priorityId), Long.parseLong(creatorId), category);
         if (subtasks != null) {
             subtaskDao.createSubtasks(taskId, subtasks);
         }
@@ -39,13 +39,14 @@ public class TaskService {
     public boolean updateTask(String taskId, String name, String deadline, String userId, String priorityId,
                               String[] subtasksNames,
                               String[] subtasksIds,
-                              String[] newSubtasks) {
+                              String[] newSubtasks, String category) {
         boolean success = taskDao.updateById(
                 Long.parseLong(taskId),
                 name,
                 LocalDateTime.parse(deadline),
                 Long.parseLong(userId),
-                Long.parseLong(priorityId));
+                Long.parseLong(priorityId),
+                category);
         if (subtasksIds != null) {
             subtaskDao.updateSubtasks(subtasksNames, subtasksIds);
         }

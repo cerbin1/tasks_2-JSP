@@ -62,6 +62,15 @@
                 </div>
                 <h1>Labels</h1>
                 <h1>Category</h1>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="form-group col-md-3">
+                        <select class="form-select" name="category">
+                            <c:forEach var="category" items="${categories}">
+                                <option value="${category}">${category}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
                 <h1>Subtasks</h1>
                 <div class="d-flex align-items-center justify-content-center">
                     <div id="subtasks" class="form-group col-md-3">
@@ -69,7 +78,7 @@
                 </div>
                 <button id="addSubtask" type="button" class="btn btn-success">Add subtask</button>
                 <h1>Files upload</h1>
-                      <input type="file" multiple name="files"/>
+                <input type="file" multiple name="files" />
                 <div class="form-group row">
                     <div class="form-control">
                         <button type="submit" class="btn btn-primary">Create Task</button>

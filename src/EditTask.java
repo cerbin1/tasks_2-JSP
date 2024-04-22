@@ -40,12 +40,14 @@ public class EditTask extends HttpServlet {
         List<PriorityDto> prioritiesData = priorityService.getPrioritiesData();
         List<SubtaskDto> subtasksData = subtaskService.getTaskSubtasks(taskId);
         List<TaskFileDto> files = taskFileDao.findAllForTaskId(Long.valueOf(taskId));
+        List<String> categoriesData = TaskCategory.listOfValues();
 
         request.setAttribute("task", task);
         request.setAttribute("users", usersData);
         request.setAttribute("priorities", prioritiesData);
         request.setAttribute("subtasks", subtasksData);
         request.setAttribute("files", files);
+        request.setAttribute("categories", categoriesData);
         request.getServletContext().getRequestDispatcher("/editTask.jsp").forward(request, response);
     }
 
@@ -56,10 +58,11 @@ public class EditTask extends HttpServlet {
         String deadline = request.getParameter("deadline");
         String userId = request.getParameter("user");
         String priorityId = request.getParameter("priority");
+        String category = request.getParameter("category");
         String[] subtasksNames = request.getParameterValues("subtasksNames[]");
         String[] subtasksIds = request.getParameterValues("subtasksIds[]");
         String[] newSubtasks = request.getParameterValues("newSubtasks[]");
-        if (taskService.updateTask(taskId, name, deadline, userId, priorityId, subtasksNames, subtasksIds, newSubtasks)) {
+        if (taskService.updateTask(taskId, name, deadline, userId, priorityId, subtasksNames, subtasksIds, newSubtasks, category)) {
             uploadNewFiles(request, taskId);
             response.sendRedirect(APP_BASE_PATH + "/tasks");
         } else {
