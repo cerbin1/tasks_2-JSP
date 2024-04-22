@@ -130,7 +130,7 @@
                                 </form>
                                 <td>
                                     <form
-                                        action="/tasks_1-Servlets/removeWorklog?worklogId=${worklog.id}&taskId=${task.id}"
+                                        action="/tasks_2-JSP/removeWorklog?worklogId=${worklog.id}&taskId=${task.id}"
                                         method="post">
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                 </td>
