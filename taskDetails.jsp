@@ -5,6 +5,7 @@
     <head>
         <title>Task details</title>
         <link rel="stylesheet" href="bootstrap.min.css">
+        <script src="bootstrap.bundle.min.js"></script>
     </head>
 
     <body>
@@ -98,9 +99,87 @@
                 </c:forEach>
             </c:if>
             <h1>Worklogs</h1>
-            <form action="/tasks_2-JSP/markAsCompleted?taskId=${task.id}" method="post" style="display: inline">
-                <button type="submit" class="btn btn-success">Mark as completed</button>
-            </form>
+            <c:if test="${empty worklogs}">
+                <span>No data.</span>
+            </c:if>
+            <c:if test="${not empty worklogs}">
+                <!-- worklogs.append("<div class=\"list-group\">"); -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Minutes</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="worklog" items="${worklogs}">
+                            <tr>
+                                <form action="/tasks_2-JSP/updateWorklog?worklogId=${worklog.id}&taskId=${task.id}"
+                                    method="post">
+                                    <td><input type="date" class="form-control" name="date"
+                                            value="${worklog.date.toString()}" /></td>
+                                    <td><input type="number" class="form-control" name="minutes" min="1" max="1000"
+                                            value="${worklog.minutes}" /></td>
+                                    <td><input class="form-control" name="comment" value="${worklog.comment}" /></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </td>
+                                </form>
+                                <td>
+                                    <form
+                                        action="/tasks_1-Servlets/removeWorklog?worklogId=${worklog.id}&taskId=${task.id}"
+                                        method="post">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                </td>
+                                </form>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <div class="form-group row">
+                <div class="form-control">
+                    <a href="/tasks_2-JSP/myTasks" class="btn btn-secondary">Back</a>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#logTimeModal"
+                        ref={openModal}>
+                        Log time
+                    </button>
+                    <form action="/tasks_2-JSP/markAsCompleted?taskId=${task.id}" method="post" style="display: inline">
+                        <button type="submit" class="btn btn-success">Mark as completed</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal fade" id="logTimeModal" tabIndex="-1" aria-labelledby="#logTimeModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="logTimeModalLabel">Worklog</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                ref={closeModal}></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/tasks_2-JSP/createWorklog?creatorId=${sessionScope.userId}&taskId=${task.id}"
+                                method="post">
+                                <input type="date" class="form-control" id="date" name="date" />
+                                <input type="number" class="form-control" name="minutes" placeholder="Minutes worked"
+                                    min="1" max="1000" />
+                                <input type="text" class="form-control" name="comment" placeholder='Comment' />
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Log Time</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </body>
 
 </html>
