@@ -87,4 +87,8 @@ public class TaskService {
             taskFileDao.create(fileName, contentType, Long.parseLong(taskId));
         }
     }
+
+    public List<TaskDto> getTasksByCategory(String category) {
+        return taskDao.findAllByCategory(category);
+    }
 }

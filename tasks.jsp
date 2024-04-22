@@ -68,6 +68,17 @@
                 <button type="submit" class="btn btn-primary">Search by name</button>
             </form>
         </div>
+        <div class="form-group row">
+            <form action="/tasks_2-JSP/searchByCategory" method="get">
+                <select class="form-select" name="category">
+                    <c:forEach var="category" items="${categories}">
+                        <option value="${category}">${category}</option>
+                    </c:forEach>
+                </select>
+                <button type="submit" class="btn btn-primary">Search by category</button>
+            </form>
+        </div>
+
     </body>
 
 </html>
