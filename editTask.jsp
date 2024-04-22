@@ -19,6 +19,16 @@
                     var subtasksContainer = document.getElementById('subtasks');
                     subtasksContainer.appendChild(newSubtask);
                 });
+                var addLabelButton = document.getElementById('addLabel');
+                addLabelButton.addEventListener('click', function () {
+                    const labels = document.getElementById('labels');
+                    const input = document.createElement('input');
+                    input.classList.add('form-control');
+                    input.style.textAlign = 'center';
+                    input.name = 'labels[]';
+                    input.placeholder = 'Label name';
+                    labels.appendChild(input);
+                });
             });
         </script>
     </head>
@@ -67,6 +77,22 @@
                     </div>
                 </div>
                 <h1>Labels</h1>
+                <c:if test="${not empty labels}">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div id="labels" class="form-group col-md-3">
+                            <c:forEach var="label" items="${labels}">
+                                <div class="input-group">
+                                    <input class="form-control col-md-9" style="text-align: center;" name="labels[]"
+                                        value="${label.name}" />
+                                    <input type="hidden" name="labelIds[]" value="${label.id}" />
+                                    <a href="/tasks_2-JSP/removeLabel?taskId=${label.id}" type="submit"
+                                        class="btn btn-danger col-md-3">Remove</a>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+                <button type="button" id="addLabel" class="btn btn-success">Add label</button>
                 <h1>Category</h1>
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="form-group col-md-3">

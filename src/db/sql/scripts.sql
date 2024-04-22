@@ -110,16 +110,16 @@ CREATE TABLE IF NOT EXISTS task_file (
 ALTER TABLE task_file DROP CONSTRAINT IF EXISTS fkgr48xj5f1r0t32jwf648vuoay;
 ALTER TABLE task_file ADD CONSTRAINT fkgr48xj5f1r0t32jwf648vuoay FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;
 
---CREATE TABLE IF NOT EXISTS task_label (
---	id bigserial NOT NULL,
---	task_id int8 NOT NULL,
---	"name" varchar(255) NOT NULL,
---	CONSTRAINT task_label_pkey PRIMARY KEY (id)
---);
---ALTER TABLE task_label DROP CONSTRAINT IF EXISTS fktmt7qqcx2mbu4jhmxu9g53o9j;
---ALTER TABLE task_label ADD CONSTRAINT fktmt7qqcx2mbu4jhmxu9g53o9j FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;;
---
---
+CREATE TABLE IF NOT EXISTS task_label (
+	id bigserial NOT NULL,
+	task_id int8 NOT NULL,
+	"name" varchar(255) NOT NULL,
+	CONSTRAINT task_label_pkey PRIMARY KEY (id)
+);
+ALTER TABLE task_label DROP CONSTRAINT IF EXISTS fktmt7qqcx2mbu4jhmxu9g53o9j;
+ALTER TABLE task_label ADD CONSTRAINT fktmt7qqcx2mbu4jhmxu9g53o9j FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE;;
+
+
 --CREATE TABLE IF NOT EXISTS worklog (
 --	id bigserial NOT NULL,
 --	"comment" varchar(255) NULL,

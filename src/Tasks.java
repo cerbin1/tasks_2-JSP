@@ -1,7 +1,4 @@
-import db.dao.SubtaskDao;
-import db.dao.TaskCategory;
-import db.dao.TaskDao;
-import db.dao.TaskFileDao;
+import db.dao.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +15,7 @@ public class Tasks extends HttpServlet {
     private final TaskService taskService;
 
     public Tasks() {
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao(), new LabelDao());
     }
 
     @Override

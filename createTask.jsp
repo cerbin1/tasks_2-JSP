@@ -18,6 +18,17 @@
                     var subtasksContainer = document.getElementById('subtasks');
                     subtasksContainer.appendChild(input);
                 });
+
+                var addLabelButton = document.getElementById('addLabel');
+                addLabelButton.addEventListener('click', function () {
+                    const labels = document.getElementById('labels');
+                    const input = document.createElement('input');
+                    input.classList.add('form-control');
+                    input.style.textAlign = 'center';
+                    input.name = 'labels[]';
+                    input.placeholder = 'Label name';
+                    labels.appendChild(input);
+                });
             });
         </script>
     </head>
@@ -61,6 +72,12 @@
                     </div>
                 </div>
                 <h1>Labels</h1>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div id="labels" class="form-group col-md-3">
+                    </div>
+                </div>
+                <button type="button" id="addLabel" class="btn btn-success">Add label</button>
+
                 <h1>Category</h1>
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="form-group col-md-3">

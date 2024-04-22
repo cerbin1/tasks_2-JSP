@@ -26,7 +26,7 @@ public class CreateTask extends HttpServlet {
     private final TaskReminderService taskReminderService;
 
     public CreateTask() {
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao(), new LabelDao());
         this.userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
         this.priorityService = new PriorityService(new PriorityDao());
         this.notificationService = new NotificationService(new NotificationDao());
@@ -53,9 +53,10 @@ public class CreateTask extends HttpServlet {
         String creatorId = request.getParameter("user");
         String priorityId = request.getParameter("priority");
         String[] subtasks = request.getParameterValues("subtasks[]");
+        String[] labels = request.getParameterValues("labels[]");
         String category = request.getParameter("category");
         String userId = (String) request.getSession(false).getAttribute("userId");
-        Long taskId = taskService.create(name, deadline, userId, priorityId, creatorId, subtasks, category);
+        Long taskId = taskService.create(name, deadline, userId, priorityId, creatorId, subtasks, category, labels);
         if (taskId == null) {
             request.setAttribute("error", "Task creation failed");
             request.getServletContext().getRequestDispatcher("/navbar.jsp").forward(request, response);

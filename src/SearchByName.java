@@ -1,3 +1,4 @@
+import db.dao.LabelDao;
 import db.dao.SubtaskDao;
 import db.dao.TaskDao;
 import db.dao.TaskFileDao;
@@ -14,7 +15,7 @@ public class SearchByName extends HttpServlet {
     private final TaskService taskService;
 
     public SearchByName() {
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao(), new LabelDao());
     }
 
     @Override

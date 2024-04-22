@@ -29,11 +29,23 @@
                 <p class="col-sm-8">${task.priority}</p>
             </div>
             <h1>Labels</h1>
+            <c:if test="${empty labels}">
+                <span>No labels added.</span>
+            </c:if>
+            <c:if test="${not empty labels}">
+                <c:forEach var="label" items="${labels}">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="input-group mb-1">
+                            <span class="form-control">${label.name}</span>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:if>
             <h1>Category</h1>
-              <div class="row">
+            <div class="row">
                 <label class="col-sm-4 col-form-label fw-bold">Category</label>
                 <p class="col-sm-8">${task.category}</p>
-              </div>
+            </div>
             <h1>Subtasks</h1>
             <c:if test="${empty subtasks}">
                 <span>No subtasks yet.</span>

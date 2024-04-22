@@ -1,19 +1,15 @@
-import db.dao.ChatMessageDao;
-import db.dao.SubtaskDao;
-import db.dao.TaskDao;
-import db.dao.TaskFileDao;
+import db.dao.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.ChatMessageService;
+import service.LabelService;
 import service.SubtaskService;
 import service.TaskService;
 import service.dto.TaskDto;
 
 import java.io.IOException;
-
-import static conf.ApplicationProperties.APP_BASE_PATH;
 
 
 public class TaskDetails extends HttpServlet {
@@ -21,12 +17,14 @@ public class TaskDetails extends HttpServlet {
     private final ChatMessageService chatMessageService;
     private final SubtaskService subtaskService;
     private final TaskFileDao taskFileDao;
+    private final LabelService labelService;
 
     public TaskDetails() {
         this.taskFileDao = new TaskFileDao();
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), taskFileDao);
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), taskFileDao, new LabelDao());
         this.chatMessageService = new ChatMessageService(new ChatMessageDao());
         this.subtaskService = new SubtaskService(new SubtaskDao());
+        this.labelService = new LabelService(new LabelDao());
     }
 
     @Override
@@ -36,6 +34,7 @@ public class TaskDetails extends HttpServlet {
         request.setAttribute("task", task);
         request.setAttribute("chatMessages", chatMessageService.getTaskChatMessages(taskId));
         request.setAttribute("subtasks", subtaskService.getTaskSubtasks(taskId));
+        request.setAttribute("labels", labelService.getTaskLabels(taskId));
         request.setAttribute("files", taskFileDao.findAllForTaskId(Long.valueOf(taskId)));
         request.getServletContext().getRequestDispatcher("/taskDetails.jsp").forward(request, response);
     }

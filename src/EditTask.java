@@ -9,6 +9,7 @@ import service.dto.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,13 +24,15 @@ public class EditTask extends HttpServlet {
     private final PriorityService priorityService;
     private final SubtaskService subtaskService;
     private final TaskFileDao taskFileDao;
+    private final LabelService labelService;
 
     public EditTask() {
         this.userService = new UserService(new UserDao(), new UserActivationLinkDao(), new EmailSendingService());
-        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao());
+        this.taskService = new TaskService(new TaskDao(), new SubtaskDao(), new TaskFileDao(), new LabelDao());
         this.priorityService = new PriorityService(new PriorityDao());
         this.subtaskService = new SubtaskService(new SubtaskDao());
         this.taskFileDao = new TaskFileDao();
+        this.labelService = new LabelService(new LabelDao());
     }
 
     @Override
@@ -39,6 +42,7 @@ public class EditTask extends HttpServlet {
         List<UserDto> usersData = userService.getUsersData();
         List<PriorityDto> prioritiesData = priorityService.getPrioritiesData();
         List<SubtaskDto> subtasksData = subtaskService.getTaskSubtasks(taskId);
+        List<LabelDto> labelsData = labelService.getTaskLabels(taskId);
         List<TaskFileDto> files = taskFileDao.findAllForTaskId(Long.valueOf(taskId));
         List<String> categoriesData = TaskCategory.listOfValues();
 
@@ -46,6 +50,7 @@ public class EditTask extends HttpServlet {
         request.setAttribute("users", usersData);
         request.setAttribute("priorities", prioritiesData);
         request.setAttribute("subtasks", subtasksData);
+        request.setAttribute("labels", labelsData);
         request.setAttribute("files", files);
         request.setAttribute("categories", categoriesData);
         request.getServletContext().getRequestDispatcher("/editTask.jsp").forward(request, response);
@@ -62,7 +67,11 @@ public class EditTask extends HttpServlet {
         String[] subtasksNames = request.getParameterValues("subtasksNames[]");
         String[] subtasksIds = request.getParameterValues("subtasksIds[]");
         String[] newSubtasks = request.getParameterValues("newSubtasks[]");
+        String[] labels = request.getParameterValues("labels[]");
+        String[] labelIds = request.getParameterValues("labelIds[]");
+        String[] newLabels = request.getParameterValues("newLabels[]");
         if (taskService.updateTask(taskId, name, deadline, userId, priorityId, subtasksNames, subtasksIds, newSubtasks, category)) {
+            labelService.updateTaskLabels(taskId, labels, labelIds, newLabels);
             uploadNewFiles(request, taskId);
             response.sendRedirect(APP_BASE_PATH + "/tasks");
         } else {

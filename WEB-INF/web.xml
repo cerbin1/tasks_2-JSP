@@ -98,6 +98,10 @@
         <servlet-name>SearchByCategoryServlet</servlet-name>
         <servlet-class>SearchByCategory</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemoveLabelServlet</servlet-name>
+        <servlet-class>RemoveLabel</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -185,6 +189,10 @@
     <servlet-mapping>
         <servlet-name>SearchByCategoryServlet</servlet-name>
         <url-pattern>/searchByCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveLabelServlet</servlet-name>
+        <url-pattern>/removeLabel</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 
