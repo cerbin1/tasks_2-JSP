@@ -39,7 +39,7 @@
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="col-md-3">
                             <div class="input-group">
-                                <div id="${subtask.sequence}" class="col-md-9" style="textAlign: center">${subtask.name}
+                                <div id="${subtask.sequence}" class="col-md-9" style="text-align: center">${subtask.name}
                                 </div>
                                 <button type="button" class="btn btn-success col-md-3"
                                     onclick="document.getElementById('${subtask.getSequence()}').style.textDecoration = 'line-through'">Done</button>
