@@ -26,7 +26,7 @@
     <body>
         <jsp:include page="navbar.jsp" />
         <div class='container'>
-            <form action="/tasks_2-JSP/editTask?taskId=${task.id}" method="post">
+            <form action="/tasks_2-JSP/editTask?taskId=${task.id}" enctype="multipart/form-data" method="post">
                 <div class="form-group row">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
@@ -76,14 +76,27 @@
                                 <input class="form-control col-md-9" style="text-align: center;" name="subtasksNames[]"
                                     value="${subtask.name}" />
                                 <input type="hidden" name="subtasksIds[]" value="${subtask.id}" />
-                                <a href="/tasks_2-JSP/removeSubtask?taskId=${task.id}&subtaskId=${subtask.id}" type="submit"
-                                    class="btn btn-danger col-md-3">Remove</a>
+                                <a href="/tasks_2-JSP/removeSubtask?taskId=${task.id}&subtaskId=${subtask.id}"
+                                    type="submit" class="btn btn-danger col-md-3">Remove</a>
                             </div>
                         </c:forEach>
                     </div>
                 </div>
                 <button id="addSubtask" type="button" class="btn btn-success">Add subtask</button>
                 <h1>Files upload</h1>
+                <c:if test="${empty files}">
+                    <span>No files.</span>
+                </c:if>
+                <c:if test="${not empty files}">
+                    <c:forEach var="file" items="${files}">
+                        <div>
+                            ${file.name}
+                            <a class="btn btn-danger col-md-3"
+                                href="/tasks_2-JSP/removeFile?filename=${file.name}&taskId=${file.taskId}">Remove</a>
+                        </div>
+                    </c:forEach>
+                </c:if>
+                <input type="file" multiple name="files" />
                 <h1>Worklogs</h1>
                 <div class="form-group row">
                     <div class='form-control'>
