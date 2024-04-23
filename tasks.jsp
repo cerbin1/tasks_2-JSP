@@ -23,6 +23,8 @@
                         <th scope="col">Deadline</th>
                         <th scope="col">Assignee</th>
                         <th scope="col">Priority</th>
+                        <th scope="col">Subtasks Count</th>
+                        <th scope="col">Worklogs Count</th>
                         <th scope="col">Is Completed</th>
                         <th scope="col">Complete date</th>
                         <th scope="col">Edit</th>
@@ -37,6 +39,8 @@
                             <td>${task.deadline.toString()}</td>
                             <td>${task.assignee}</td>
                             <td>${task.priority}</td>
+                            <td>${task.subtasksCount}</td>
+                            <td>${task.worklogsCount}</td>
                             <td>
                                 <c:if test="${task.completed}">
                                     Yes

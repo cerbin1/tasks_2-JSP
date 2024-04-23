@@ -9,9 +9,24 @@ public class TaskDto {
     private final LocalDateTime deadline;
     private final String assignee;
     private final String priority;
+    private final Long subtasksCount;
+    private final Long worklogsCount;
     private final boolean completed;
     private final LocalDateTime completeDate;
     private final String category;
+
+    public TaskDto(Long id, String name, LocalDateTime deadline, String assignee, String priority, Long subtasksCount, Long worklogsCount, boolean completed, LocalDateTime completeDate, String category) {
+        this.id = id;
+        this.name = name;
+        this.deadline = deadline;
+        this.assignee = assignee;
+        this.priority = priority;
+        this.subtasksCount = subtasksCount;
+        this.worklogsCount = worklogsCount;
+        this.completed = completed;
+        this.completeDate = completeDate;
+        this.category = category;
+    }
 
     public TaskDto(Long id, String name, LocalDateTime deadline, String assignee, String priority, boolean completed, LocalDateTime completeDate, String category) {
         this.id = id;
@@ -22,8 +37,9 @@ public class TaskDto {
         this.completed = completed;
         this.completeDate = completeDate;
         this.category = category;
+        this.subtasksCount = null;
+        this.worklogsCount = null;
     }
-
 
     public Long getId() {
         return id;
@@ -43,6 +59,14 @@ public class TaskDto {
 
     public String getPriority() {
         return priority;
+    }
+
+    public Long getSubtasksCount() {
+        return subtasksCount;
+    }
+
+    public Long getWorklogsCount() {
+        return worklogsCount;
     }
 
     public boolean isCompleted() {
