@@ -37,3 +37,6 @@ sources.txt
 # user files upload
 /WEB-INF/uploads/*
 !/WEB-INF/uploads/.gitkeep
+
+# google integration credentials
+credentials.json

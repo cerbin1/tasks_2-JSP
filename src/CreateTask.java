@@ -1,4 +1,5 @@
 import db.dao.*;
+import integration.GoogleCalendarIntegration;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,9 +8,11 @@ import jakarta.servlet.http.Part;
 import service.*;
 import service.dto.PriorityDto;
 import service.dto.UserDto;
+import utils.DateUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -37,7 +40,7 @@ public class CreateTask extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<UserDto> usersData = userService.getUsersData();
         List<PriorityDto> prioritiesData = priorityService.getPrioritiesData();
-        List<String> categoriesData = TaskCategory.listOfValues();;
+        List<String> categoriesData = TaskCategory.listOfValues();
 
         request.setAttribute("users", usersData);
         request.setAttribute("priorities", prioritiesData);
@@ -64,6 +67,7 @@ public class CreateTask extends HttpServlet {
             notificationService.createNotification("New Task", taskId, creatorId);
             taskReminderService.createTaskReminder(taskId, LocalDateTime.parse(deadline).minusHours(1));
             uploadFiles(request, taskId);
+            createGoogleCalendarEvent(name, subtasks, LocalDateTime.parse(deadline));
             response.sendRedirect(APP_BASE_PATH + "/tasks");
         }
     }
@@ -78,6 +82,21 @@ public class CreateTask extends HttpServlet {
             String realPath = getServletContext().getRealPath(FILE_UPLOADS_BASE_URL);
             taskService.saveTaskFileInfo(fileName, file.getContentType(), taskId);
             file.write(realPath + File.separator + fileName);
+        }
+    }
+
+    private void createGoogleCalendarEvent(String taskName, String[] subtasks, LocalDateTime deadline) {
+        GoogleCalendarIntegration googleCalendarIntegration = new GoogleCalendarIntegration();
+        try {
+            StringBuilder result = new StringBuilder();
+            if (subtasks != null) {
+                for (String s : subtasks) {
+                    result.append("<li>").append(s).append("</li>");
+                }
+            }
+            googleCalendarIntegration.createGoogleCalendarEvent(taskName, result.toString(), DateUtils.localDateTimeToDate(deadline));
+        } catch (IOException | GeneralSecurityException e) {
+            throw new RuntimeException(e);
         }
     }
 }
