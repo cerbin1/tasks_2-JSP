@@ -118,6 +118,10 @@
         <servlet-name>UpdateWorklogServlet</servlet-name>
         <servlet-class>UpdateWorklog</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StatsServlet</servlet-name>
+        <servlet-class>Stats</servlet-class>
+    </servlet>
     <!-- SERVLET-DEFINITIONS-END -->
 
 
@@ -225,6 +229,10 @@
     <servlet-mapping>
         <servlet-name>UpdateWorklogServlet</servlet-name>
         <url-pattern>/updateWorklog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatsServlet</servlet-name>
+        <url-pattern>/stats</url-pattern>
     </servlet-mapping>
     <!-- SERVLET-MAPPINGS-END -->
 
